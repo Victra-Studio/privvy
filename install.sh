@@ -68,14 +68,26 @@ if [ -d "$(pwd)/privvy.py" ]; then
 else
     # Remote installation
     echo "Downloading from GitHub..."
-    REPO_URL="https://github.com/yourname/privvy/archive/refs/tags/v$VERSION.tar.gz"
+    
+    # Try to detect GitHub URL from git config or use default
+    REPO_URL="https://github.com/Victra-Studio/privvy/archive/refs/heads/main.tar.gz"
     
     TMP_DIR=$(mktemp -d)
     cd "$TMP_DIR"
     
-    curl -fsSL "$REPO_URL" -o privvy.tar.gz
+    echo "Fetching latest version from main branch..."
+    if ! curl -fsSL "$REPO_URL" -o privvy.tar.gz; then
+        echo -e "${RED}❌ Failed to download from GitHub${NC}"
+        echo "Please install manually:"
+        echo "  git clone https://github.com/Victra-Studio/privvy.git"
+        echo "  cd privvy"
+        echo "  ./install.sh"
+        rm -rf "$TMP_DIR"
+        exit 1
+    fi
+    
     tar -xzf privvy.tar.gz
-    cd "privvy-$VERSION"
+    cd privvy-main  # GitHub uses 'main' for the directory name
     
     $SUDO cp privvy.py lexer.py parser.py interpreter.py ast_nodes.py token_types.py "$PRIVVY_DIR/"
     $SUDO cp privvy-cli.py privvy-db.py "$PRIVVY_DIR/"
