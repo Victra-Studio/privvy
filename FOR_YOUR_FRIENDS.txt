@@ -8,33 +8,30 @@ Build a complete backend in 2 minutes!
 QUICK INSTALL (Pick one):
 --------------------------------------------
 
-Option 1: Homebrew (coming soon!)
-  brew tap yourname/privvy
+Option 1: Git clone (easiest!)
+  git clone https://github.com/Victra-Studio/privvy.git
+  cd privvy
+  ./install.sh
+  privvy create-project my-api
+
+Option 2: Homebrew (coming soon!)
+  brew tap Victra-Studio/privvy
   brew install privvy
   privvy create-project my-api
-
-Option 2: One-line install
-  curl -fsSL https://raw.githubusercontent.com/yourname/privvy/main/install.sh | bash
-  privvy create-project my-api
-
-Option 3: Git clone (easiest for now!)
-  git clone https://github.com/yourname/privvy.git
-  cd privvy
-  python3 privvy-cli.py create-project my-api
 
 --------------------------------------------
 CREATE YOUR FIRST PROJECT:
 --------------------------------------------
 
 1. Create project:
-   python3 privvy-cli.py create-project my-api
+   privvy create-project my-api
    cd my-api
 
 2. Run migrations:
-   python3 privvy.py migrate.pv
+   privvy run migrate.pv
 
 3. Run app:
-   python3 privvy.py src/main.pv
+   privvy run src/main.pv
 
 Done! You have a working backend! 🎉
 

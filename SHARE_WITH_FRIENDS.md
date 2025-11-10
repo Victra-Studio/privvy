@@ -18,25 +18,26 @@
 
 ## Get Started (3 steps!)
 
-### Step 1: Get Privvy
+### Step 1: Install Privvy
 
 ```bash
-git clone https://github.com/yourname/privvy.git
+git clone https://github.com/Victra-Studio/privvy.git
 cd privvy
+./install.sh
 ```
 
 ### Step 2: Create Project
 
 ```bash
-python3 privvy-cli.py create-project my-api
+privvy create-project my-api
 cd my-api
 ```
 
 ### Step 3: Run It!
 
 ```bash
-python3 privvy.py migrate.pv
-python3 privvy.py src/main.pv
+privvy run migrate.pv
+privvy run src/main.pv
 ```
 
 **Done!** You have a working backend! 🎉
