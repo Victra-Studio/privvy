@@ -1,0 +1,10 @@
+# Privvy Programming Language - Requirements
+# Python 3.7+ required
+
+# Core language - no dependencies
+# All components use only Python standard library
+
+# Database support (optional)
+psycopg2-binary>=2.9.0  # PostgreSQL
+# sqlite3 is built into Python, no need to install
+

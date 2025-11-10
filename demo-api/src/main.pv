@@ -1,0 +1,21 @@
+// src/main.pv - Main application entry point
+print("🚀 Starting application...")
+print("")
+
+// Connect to database
+let db = Database("app.db")
+// For PostgreSQL: let db = Database("postgresql://user:pass@host:5432/dbname")
+
+// Define models (copy from schema/schema.pv)
+let User = Model("users", dict(["id", "SERIAL PRIMARY KEY", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+// Your application code here
+print("✅ Application ready!")
+print("💡 Start building your backend!")
+print("")
+
+// Example: Get all users
+let users = User.all(db)
+print("Total users: " + str(len(users)))
+
+db.close()

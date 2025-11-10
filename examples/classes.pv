@@ -1,0 +1,27 @@
+// Object-oriented programming with classes
+
+class Person {
+    constructor(name, age) {
+        this.name = name
+        this.age = age
+    }
+    
+    fun greet() {
+        print("Hi, I'm " + this.name + " and I'm " + str(this.age) + " years old")
+    }
+    
+    fun haveBirthday() {
+        this.age = this.age + 1
+        print(this.name + " is now " + str(this.age) + " years old!")
+    }
+}
+
+// Create instances
+let alice = new Person("Alice", 25)
+let bob = new Person("Bob", 30)
+
+alice.greet()
+bob.greet()
+
+alice.haveBirthday()
+

@@ -1,0 +1,23 @@
+// Loop examples
+
+// While loop
+print("While loop:")
+let i = 1
+while (i <= 5) {
+    print("Count:", i)
+    i = i + 1
+}
+
+// For loop
+print("\nFor loop:")
+for (let j = 1; j <= 5; j = j + 1) {
+    print("Count:", j)
+}
+
+// Loop with array
+print("\nArray iteration:")
+let numbers = [10, 20, 30, 40, 50]
+for (let k = 0; k < len(numbers); k = k + 1) {
+    print("Number at index", k, ":", numbers[k])
+}
+

@@ -1,0 +1,44 @@
+// Simple calculator class
+
+class Calculator {
+    constructor() {
+        this.result = 0
+    }
+    
+    fun add(x, y) {
+        this.result = x + y
+        return this.result
+    }
+    
+    fun subtract(x, y) {
+        this.result = x - y
+        return this.result
+    }
+    
+    fun multiply(x, y) {
+        this.result = x * y
+        return this.result
+    }
+    
+    fun divide(x, y) {
+        if (y == 0) {
+            print("Error: Division by zero!")
+            return null
+        }
+        this.result = x / y
+        return this.result
+    }
+    
+    fun getResult() {
+        return this.result
+    }
+}
+
+let calc = new Calculator()
+
+print("10 + 5 =", calc.add(10, 5))
+print("10 - 5 =", calc.subtract(10, 5))
+print("10 * 5 =", calc.multiply(10, 5))
+print("10 / 5 =", calc.divide(10, 5))
+print("Last result:", calc.getResult())
+

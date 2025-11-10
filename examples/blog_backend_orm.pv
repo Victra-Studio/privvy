@@ -1,0 +1,125 @@
+// Complete Blog Backend with ORM
+// This shows how EASY it is to build a full backend in Privvy!
+
+print("=== Blog Backend with Privvy ORM ===")
+print("")
+
+// Connect to database
+let db = Database("blog_orm.db")
+
+// Define Models (normally in schema.pv)
+let UserFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let User = Model("users", UserFields)
+
+let PostFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "published", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let Post = Model("posts", PostFields)
+
+let CommentFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "content", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let Comment = Model("comments", CommentFields)
+
+// Migrate all models
+print("📦 Running migrations...")
+User.migrate(db)
+Post.migrate(db)
+Comment.migrate(db)
+print("✅ All tables created!")
+print("")
+
+// Create users
+print("👤 Creating users...")
+let alice = dict(["username", "alice", "email", "alice@example.com"])
+let aliceId = User.create(db, alice)
+
+let bob = dict(["username", "bob", "email", "bob@example.com"])
+let bobId = User.create(db, bob)
+
+let charlie = dict(["username", "charlie", "email", "charlie@example.com"])
+let charlieId = User.create(db, charlie)
+
+print("✅ Created " + str(User.count(db)) + " users")
+print("")
+
+// Create posts
+print("📝 Creating posts...")
+let post1 = dict(["user_id", aliceId, "title", "Getting Started with Privvy", "content", "Privvy is amazing! The ORM makes backend dev so easy.", "published", 1])
+let post1Id = Post.create(db, post1)
+
+let post2 = dict(["user_id", bobId, "title", "Why I Love Databases", "content", "Databases are powerful tools for storing data.", "published", 1])
+let post2Id = Post.create(db, post2)
+
+let post3 = dict(["user_id", aliceId, "title", "Advanced Privvy Tips", "content", "Here are some pro tips for using Privvy...", "published", 0])
+let post3Id = Post.create(db, post3)
+
+print("✅ Created " + str(Post.count(db)) + " posts")
+print("")
+
+// Create comments
+print("💬 Adding comments...")
+let comment1 = dict(["post_id", post1Id, "user_id", bobId, "content", "Great post Alice!"])
+Comment.create(db, comment1)
+
+let comment2 = dict(["post_id", post1Id, "user_id", charlieId, "content", "I agree, Privvy is awesome!"])
+Comment.create(db, comment2)
+
+let comment3 = dict(["post_id", post2Id, "user_id", aliceId, "content", "Nice article Bob!"])
+Comment.create(db, comment3)
+
+print("✅ Added " + str(Comment.count(db)) + " comments")
+print("")
+
+// Query published posts
+print("📚 Published Posts:")
+let publishedPosts = Post.where(db, "published = ?", 1)
+for (let i = 0; i < len(publishedPosts); i = i + 1) {
+    let post = publishedPosts[i]
+    let author = User.find(db, post["user_id"])
+    print("  • " + post["title"])
+    print("    by @" + author["username"])
+    print("")
+}
+
+// Get post with comments
+print("📖 Post Details: '" + publishedPosts[0]["title"] + "'")
+let postComments = Comment.where(db, "post_id = ?", post1Id)
+print("Comments (" + str(len(postComments)) + "):")
+for (let i = 0; i < len(postComments); i = i + 1) {
+    let comment = postComments[i]
+    let commenter = User.find(db, comment["user_id"])
+    print("  @" + commenter["username"] + ": " + comment["content"])
+}
+print("")
+
+// Update a post
+print("✏️  Updating post...")
+let updateData = dict(["title", "Getting Started with Privvy (Updated!)"])
+Post.update(db, post1Id, updateData)
+let updatedPost = Post.find(db, post1Id)
+print("✅ Updated title to: " + updatedPost["title"])
+print("")
+
+// User statistics
+print("📊 Statistics:")
+print("  Total users: " + str(User.count(db)))
+print("  Total posts: " + str(Post.count(db)))
+print("  Published posts: " + str(len(Post.where(db, "published = 1"))))
+print("  Total comments: " + str(Comment.count(db)))
+print("")
+
+// Find user's posts
+print("📝 Alice's posts:")
+let alicePosts = Post.findBy(db, "user_id", aliceId)
+for (let i = 0; i < len(alicePosts); i = i + 1) {
+    let post = alicePosts[i]
+    let status = " (draft)"
+    if (post["published"] == 1) {
+        status = " (published)"
+    }
+    print("  • " + post["title"] + status)
+}
+print("")
+
+// Cleanup
+db.close()
+print("✅ Blog backend demo complete!")
+print("🚀 You just built a complete blog backend in < 100 lines!")
+

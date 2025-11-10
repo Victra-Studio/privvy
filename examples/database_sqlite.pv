@@ -1,0 +1,62 @@
+// SQLite Database Example - No Setup Required!
+// SQLite is built into Privvy, perfect for beginners
+
+print("=== Privvy SQLite Database Demo ===")
+print("")
+
+// STEP 1: Connect to database (creates file if it doesn't exist)
+let db = Database("users.db")
+
+// STEP 2: Create a table
+db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)")
+print("✅ Table created!")
+
+// STEP 3: Insert data
+db.execute("INSERT INTO users (name, age) VALUES ('Alice', 25)")
+db.execute("INSERT INTO users (name, age) VALUES ('Bob', 30)")
+db.execute("INSERT INTO users (name, age) VALUES ('Charlie', 22)")
+print("✅ 3 users added!")
+print("")
+
+// STEP 4: Query data
+print("All users:")
+let users = db.query("SELECT * FROM users")
+for (let i = 0; i < len(users); i = i + 1) {
+    let user = users[i]
+    print("  - " + user["name"] + " (age: " + str(user["age"]) + ")")
+}
+print("")
+
+// STEP 5: Query with conditions
+print("Users over 25:")
+let adults = db.query("SELECT * FROM users WHERE age > 25")
+for (let i = 0; i < len(adults); i = i + 1) {
+    let user = adults[i]
+    print("  - " + user["name"])
+}
+print("")
+
+// STEP 6: Update data
+db.execute("UPDATE users SET age = 26 WHERE name = 'Alice'")
+print("✅ Updated Alice's age!")
+
+// STEP 7: Verify update
+let alice = db.query("SELECT * FROM users WHERE name = 'Alice'")
+print("Alice's new age: " + str(alice[0]["age"]))
+print("")
+
+// STEP 8: Delete data
+db.execute("DELETE FROM users WHERE name = 'Charlie'")
+print("✅ Deleted Charlie")
+
+// Check remaining users
+let remaining = db.query("SELECT COUNT(*) as count FROM users")
+print("Total users remaining: " + str(remaining[0]["count"]))
+print("")
+
+// Close connection
+db.close()
+print("✅ Database closed!")
+print("")
+print("That's it! Database in just a few lines! 🎉")
+

@@ -1,0 +1,86 @@
+// Simple ORM Example - The Easiest Database ORM Ever!
+
+print("=== Privvy ORM Demo ===")
+print("")
+
+// Connect to database
+let db = Database("blog.db")
+
+// Define User model - Just 2 lines!
+let userFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "name", "TEXT NOT NULL", "email", "TEXT UNIQUE", "age", "INTEGER"])
+let User = Model("users", userFields)
+
+// Migrate (create table)
+User.migrate(db)
+print("✅ User table created!")
+print("")
+
+// Create users - Super simple!
+let userData1 = dict(["name", "Alice", "email", "alice@example.com", "age", 25])
+User.create(db, userData1)
+
+let userData2 = dict(["name", "Bob", "email", "bob@example.com", "age", 30])
+User.create(db, userData2)
+
+let userData3 = dict(["name", "Charlie", "email", "charlie@example.com", "age", 22])
+User.create(db, userData3)
+
+print("✅ Created 3 users!")
+print("")
+
+// Get all users
+print("All users:")
+let users = User.all(db)
+for (let i = 0; i < len(users); i = i + 1) {
+    let user = users[i]
+    print("  " + str(user["id"]) + ". " + user["name"] + " (" + user["email"] + ") - Age: " + str(user["age"]))
+}
+print("")
+
+// Find user by ID
+print("Finding user #2:")
+let bob = User.find(db, 2)
+if (bob != null) {
+    print("  Found: " + bob["name"] + " - " + bob["email"])
+}
+print("")
+
+// Find by field
+print("Users named 'Alice':")
+let alices = User.findBy(db, "name", "Alice")
+for (let i = 0; i < len(alices); i = i + 1) {
+    let user = alices[i]
+    print("  " + user["name"] + " - " + user["email"])
+}
+print("")
+
+// Update user
+print("Updating Bob's age...")
+let updateData = dict(["age", 31])
+User.update(db, 2, updateData)
+print("✅ Updated!")
+
+// Verify update
+let updatedBob = User.find(db, 2)
+print("Bob's new age: " + str(updatedBob["age"]))
+print("")
+
+// Count users
+let totalUsers = User.count(db)
+print("Total users: " + str(totalUsers))
+print("")
+
+// Delete user
+print("Deleting user #3...")
+User.delete(db, 3)
+print("✅ Deleted!")
+
+// Count again
+let remaining = User.count(db)
+print("Remaining users: " + str(remaining))
+print("")
+
+// Close connection
+db.close()
+print("✅ ORM demo complete! That was SO EASY! 🚀")
+

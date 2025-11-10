@@ -1,0 +1,138 @@
+// Complete Todo App Backend with Database
+// This shows how easy it is to build a full backend in Privvy!
+
+print("=== Todo App Backend ===")
+print("")
+
+// Setup database
+let db = Database("todos.db")
+
+// Create tables
+db.execute("CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, completed INTEGER DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+
+db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+
+print("✅ Database initialized!")
+print("")
+
+// Todo Manager Class
+class TodoManager {
+    constructor(database) {
+        this.db = database
+    }
+    
+    fun createTodo(title) {
+        this.db.execute("INSERT INTO todos (title) VALUES (?)", title)
+        print("✅ Created todo: " + title)
+    }
+    
+    fun getAllTodos() {
+        return this.db.query("SELECT * FROM todos ORDER BY created_at DESC")
+    }
+    
+    fun getActiveTodos() {
+        return this.db.query("SELECT * FROM todos WHERE completed = 0")
+    }
+    
+    fun completeTodo(id) {
+        this.db.execute("UPDATE todos SET completed = 1 WHERE id = ?", id)
+        print("✅ Completed todo #" + str(id))
+    }
+    
+    fun deleteTodo(id) {
+        this.db.execute("DELETE FROM todos WHERE id = ?", id)
+        print("🗑️  Deleted todo #" + str(id))
+    }
+    
+    fun getStats() {
+        let total = this.db.query("SELECT COUNT(*) as count FROM todos")
+        let completed = this.db.query("SELECT COUNT(*) as count FROM todos WHERE completed = 1")
+        let active = this.db.query("SELECT COUNT(*) as count FROM todos WHERE completed = 0")
+        
+        print("📊 Statistics:")
+        print("   Total todos: " + str(total[0]["count"]))
+        print("   Completed: " + str(completed[0]["count"]))
+        print("   Active: " + str(active[0]["count"]))
+    }
+}
+
+// User Manager Class
+class UserManager {
+    constructor(database) {
+        this.db = database
+    }
+    
+    fun createUser(username) {
+        this.db.execute("INSERT INTO users (username) VALUES (?)", username)
+        print("✅ User created: " + username)
+    }
+    
+    fun getUser(username) {
+        return this.db.query("SELECT * FROM users WHERE username = ?", username)
+    }
+    
+    fun getAllUsers() {
+        return this.db.query("SELECT * FROM users")
+    }
+}
+
+// Create managers
+let todoManager = new TodoManager(db)
+let userManager = new UserManager(db)
+
+// Demo: Create a user
+print("--- Creating User ---")
+userManager.createUser("john_doe")
+print("")
+
+// Demo: Add some todos
+print("--- Adding Todos ---")
+todoManager.createTodo("Learn Privvy")
+todoManager.createTodo("Build a backend")
+todoManager.createTodo("Deploy to production")
+print("")
+
+// Demo: View all todos
+print("--- All Todos ---")
+let todos = todoManager.getAllTodos()
+for (let i = 0; i < len(todos); i = i + 1) {
+    let todo = todos[i]
+    let status = "✓"
+    if (todo["completed"] == 0) {
+        status = "○"
+    }
+    print(status + " " + str(todo["id"]) + ". " + todo["title"])
+}
+print("")
+
+// Demo: Complete a todo
+print("--- Completing Todo ---")
+todoManager.completeTodo(1)
+print("")
+
+// Demo: View active todos
+print("--- Active Todos ---")
+let active = todoManager.getActiveTodos()
+for (let i = 0; i < len(active); i = i + 1) {
+    let todo = active[i]
+    print("○ " + str(todo["id"]) + ". " + todo["title"])
+}
+print("")
+
+// Demo: Show statistics
+todoManager.getStats()
+print("")
+
+// Demo: List users
+print("--- All Users ---")
+let users = userManager.getAllUsers()
+for (let i = 0; i < len(users); i = i + 1) {
+    let user = users[i]
+    print("👤 " + user["username"])
+}
+print("")
+
+// Cleanup
+db.close()
+print("✅ Backend demo complete! This was all in Privvy! 🚀")
+

@@ -1,0 +1,116 @@
+// db-seed.pv - Seed database with sample data
+// Perfect for development and testing
+
+print("=== Privvy Database Seeding ===")
+print("")
+
+// Connect to database
+let db = Database("app.db")
+print("📡 Connected to database")
+print("")
+
+// ============================================
+// LOAD MODELS
+// ============================================
+
+let User = Model("users", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "age", "INTEGER", "bio", "TEXT", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Post = Model("posts", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "slug", "TEXT UNIQUE", "published", "INTEGER DEFAULT 0", "views", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Comment = Model("comments", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "content", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Category = Model("categories", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "name", "TEXT UNIQUE NOT NULL", "slug", "TEXT UNIQUE NOT NULL", "description", "TEXT", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+// ============================================
+// SEED USERS
+// ============================================
+
+print("👤 Creating users...")
+
+let user1 = dict(["username", "alice", "email", "alice@example.com", "password", "hashed_password_123", "age", 25, "bio", "Full-stack developer who loves Privvy!"])
+let aliceId = User.create(db, user1)
+
+let user2 = dict(["username", "bob", "email", "bob@example.com", "password", "hashed_password_456", "age", 30, "bio", "Backend engineer and database enthusiast"])
+let bobId = User.create(db, user2)
+
+let user3 = dict(["username", "charlie", "email", "charlie@example.com", "password", "hashed_password_789", "age", 22, "bio", "Frontend developer learning backend"])
+let charlieId = User.create(db, user3)
+
+print("  ✓ Created 3 users")
+
+// ============================================
+// SEED CATEGORIES
+// ============================================
+
+print("📁 Creating categories...")
+
+let cat1 = dict(["name", "Technology", "slug", "technology", "description", "All about tech"])
+let techId = Category.create(db, cat1)
+
+let cat2 = dict(["name", "Programming", "slug", "programming", "description", "Coding tutorials and tips"])
+let progId = Category.create(db, cat2)
+
+let cat3 = dict(["name", "Databases", "slug", "databases", "description", "Everything about databases"])
+let dbId = Category.create(db, cat3)
+
+print("  ✓ Created 3 categories")
+
+// ============================================
+// SEED POSTS
+// ============================================
+
+print("📝 Creating posts...")
+
+let post1 = dict(["user_id", aliceId, "title", "Getting Started with Privvy", "content", "Privvy is an amazing language that makes backend development super easy. In this post, I'll show you how to get started...", "slug", "getting-started-with-privvy", "published", 1, "views", 150])
+let post1Id = Post.create(db, post1)
+
+let post2 = dict(["user_id", bobId, "title", "Database Design Best Practices", "content", "When designing databases, there are several key principles to follow. Let me share some tips from my experience...", "slug", "database-design-best-practices", "published", 1, "views", 230])
+let post2Id = Post.create(db, post2)
+
+let post3 = dict(["user_id", aliceId, "title", "Building a REST API with Privvy", "content", "REST APIs are the backbone of modern web applications. Here's how to build one with Privvy's ORM...", "slug", "building-rest-api-privvy", "published", 1, "views", 180])
+let post3Id = Post.create(db, post3)
+
+let post4 = dict(["user_id", charlieId, "title", "My Journey Learning Backend Development", "content", "As a frontend developer, learning backend was intimidating at first. But then I found Privvy...", "slug", "journey-learning-backend", "published", 0, "views", 45])
+let post4Id = Post.create(db, post4)
+
+print("  ✓ Created 4 posts")
+
+// ============================================
+// SEED COMMENTS
+// ============================================
+
+print("💬 Creating comments...")
+
+let comment1 = dict(["post_id", post1Id, "user_id", bobId, "content", "Great post Alice! Really helpful for beginners."])
+Comment.create(db, comment1)
+
+let comment2 = dict(["post_id", post1Id, "user_id", charlieId, "content", "This is exactly what I needed. Thank you!"])
+Comment.create(db, comment2)
+
+let comment3 = dict(["post_id", post2Id, "user_id", aliceId, "content", "Excellent tips Bob. I learned a lot from this."])
+Comment.create(db, comment3)
+
+let comment4 = dict(["post_id", post2Id, "user_id", charlieId, "content", "The normalization examples were super clear!"])
+Comment.create(db, comment4)
+
+let comment5 = dict(["post_id", post3Id, "user_id", bobId, "content", "Love how simple the ORM makes everything."])
+Comment.create(db, comment5)
+
+print("  ✓ Created 5 comments")
+
+print("")
+print("✅ Database seeded successfully!")
+print("")
+
+// Show summary
+print("📊 Seeding Summary:")
+print("   Users: " + str(User.count(db)))
+print("   Posts: " + str(Post.count(db)))
+print("   Comments: " + str(Comment.count(db)))
+print("   Categories: " + str(Category.count(db)))
+print("")
+
+db.close()
+print("🚀 Your database is ready!")
+print("   Start building your application!")
+

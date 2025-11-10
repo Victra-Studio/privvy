@@ -1,0 +1,59 @@
+// PostgreSQL Database Example
+// Production-ready database for real applications
+
+print("=== Privvy PostgreSQL Database Demo ===")
+print("")
+
+// STEP 1: Connect to PostgreSQL
+// Format: postgresql://username:password@host:port/database
+let db = Database("postgresql://postgres:password@localhost:5432/mydb")
+print("✅ Connected to PostgreSQL!")
+
+// STEP 2: Create a table
+db.execute("CREATE TABLE IF NOT EXISTS products (id SERIAL PRIMARY KEY, name VARCHAR(100), price DECIMAL(10,2), stock INTEGER)")
+print("✅ Products table created!")
+
+// STEP 3: Insert products
+db.execute("INSERT INTO products (name, price, stock) VALUES ('Laptop', 999.99, 10)")
+db.execute("INSERT INTO products (name, price, stock) VALUES ('Mouse', 29.99, 50)")
+db.execute("INSERT INTO products (name, price, stock) VALUES ('Keyboard', 79.99, 25)")
+print("✅ Products added!")
+print("")
+
+// STEP 4: Query all products
+print("All products:")
+let products = db.query("SELECT * FROM products ORDER BY price DESC")
+for (let i = 0; i < len(products); i = i + 1) {
+    let product = products[i]
+    print("  - " + product["name"] + ": $" + str(product["price"]) + " (" + str(product["stock"]) + " in stock)")
+}
+print("")
+
+// STEP 5: Query with conditions
+print("Affordable products (under $50):")
+let affordable = db.query("SELECT * FROM products WHERE price < 50")
+for (let i = 0; i < len(affordable); i = i + 1) {
+    let product = affordable[i]
+    print("  - " + product["name"] + ": $" + str(product["price"]))
+}
+print("")
+
+// STEP 6: Update stock
+db.execute("UPDATE products SET stock = stock - 1 WHERE name = 'Laptop'")
+print("✅ Laptop sold! Stock updated")
+
+// STEP 7: Get low stock items
+print("Low stock alert (< 20 items):")
+let lowStock = db.query("SELECT name, stock FROM products WHERE stock < 20")
+for (let i = 0; i < len(lowStock); i = i + 1) {
+    let item = lowStock[i]
+    print("  ⚠️  " + item["name"] + ": only " + str(item["stock"]) + " left!")
+}
+print("")
+
+// Close connection
+db.close()
+print("✅ Database connection closed!")
+print("")
+print("PostgreSQL + Privvy = Easy backend! 🚀")
+

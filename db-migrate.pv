@@ -1,0 +1,49 @@
+// db-migrate.pv - Run database migrations
+print("=== Privvy Database Migration ===")
+print("")
+
+let db = Database("app.db")
+print("📡 Connected to database: app.db")
+print("")
+print("🔨 Running migrations...")
+print("")
+
+// Define all models
+let User = Model("users", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "age", "INTEGER", "bio", "TEXT", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Post = Model("posts", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "slug", "TEXT UNIQUE", "published", "INTEGER DEFAULT 0", "views", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Comment = Model("comments", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "content", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Like = Model("likes", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Category = Model("categories", dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "name", "TEXT UNIQUE NOT NULL", "slug", "TEXT UNIQUE NOT NULL", "description", "TEXT", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+// Run migrations
+User.migrate(db)
+print("  ✓ Created table: users")
+
+Post.migrate(db)
+print("  ✓ Created table: posts")
+
+Comment.migrate(db)
+print("  ✓ Created table: comments")
+
+Like.migrate(db)
+print("  ✓ Created table: likes")
+
+Category.migrate(db)
+print("  ✓ Created table: categories")
+
+print("")
+print("✅ All migrations complete!")
+print("")
+
+db.close()
+print("📊 Database Summary:")
+print("   Tables created: 5")
+print("   Status: Ready for use")
+print("")
+print("🚀 Next steps:")
+print("   1. Run seed script: python3 privvy.py db-seed.pv")
+print("   2. Start building your app!")

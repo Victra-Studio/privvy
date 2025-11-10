@@ -1,0 +1,29 @@
+// migrate.pv - Database migrations
+print("=== Running Migrations ===")
+print("")
+
+// Connect to database
+let db = Database("app.db")
+// For PostgreSQL: let db = Database("postgresql://user:pass@host:5432/dbname")
+
+print("📡 Connected to database")
+print("")
+
+// Define models (copy from schema/schema.pv)
+let User = Model("users", dict(["id", "SERIAL PRIMARY KEY", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Post = Model("posts", dict(["id", "SERIAL PRIMARY KEY", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "published", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+// Run migrations
+print("🔨 Creating tables...")
+User.migrate(db)
+print("  ✓ Created table: users")
+
+Post.migrate(db)
+print("  ✓ Created table: posts")
+
+print("")
+print("✅ All migrations complete!")
+print("")
+
+db.close()

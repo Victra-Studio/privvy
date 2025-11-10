@@ -1,0 +1,106 @@
+// schema.pv - Clean, Prisma-like database schema
+// Define your models here in a readable format
+
+print("📦 Loading database schema...")
+print("")
+
+// ============================================
+// USER MODEL
+// ============================================
+let User = Model("users", dict([
+    // Primary Key
+    "id",         "INTEGER PRIMARY KEY AUTOINCREMENT",
+    
+    // Fields
+    "username",   "TEXT UNIQUE NOT NULL",
+    "email",      "TEXT UNIQUE NOT NULL",
+    "password",   "TEXT NOT NULL",
+    "age",        "INTEGER",
+    "bio",        "TEXT",
+    
+    // Timestamps
+    "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+    "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+]))
+
+// ============================================
+// POST MODEL
+// ============================================
+let Post = Model("posts", dict([
+    // Primary Key
+    "id",         "INTEGER PRIMARY KEY AUTOINCREMENT",
+    
+    // Foreign Keys
+    "user_id",    "INTEGER NOT NULL",  // References User.id
+    
+    // Fields
+    "title",      "TEXT NOT NULL",
+    "content",    "TEXT",
+    "slug",       "TEXT UNIQUE",
+    "published",  "INTEGER DEFAULT 0",  // 0 = draft, 1 = published
+    "views",      "INTEGER DEFAULT 0",
+    
+    // Timestamps
+    "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+    "updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+]))
+
+// ============================================
+// COMMENT MODEL
+// ============================================
+let Comment = Model("comments", dict([
+    // Primary Key
+    "id",         "INTEGER PRIMARY KEY AUTOINCREMENT",
+    
+    // Foreign Keys
+    "post_id",    "INTEGER NOT NULL",  // References Post.id
+    "user_id",    "INTEGER NOT NULL",  // References User.id
+    
+    // Fields
+    "content",    "TEXT NOT NULL",
+    
+    // Timestamps
+    "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+]))
+
+// ============================================
+// LIKE MODEL (Many-to-Many)
+// ============================================
+let Like = Model("likes", dict([
+    // Primary Key
+    "id",         "INTEGER PRIMARY KEY AUTOINCREMENT",
+    
+    // Foreign Keys
+    "post_id",    "INTEGER NOT NULL",  // References Post.id
+    "user_id",    "INTEGER NOT NULL",  // References User.id
+    
+    // Timestamps
+    "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+]))
+
+// ============================================
+// CATEGORY MODEL
+// ============================================
+let Category = Model("categories", dict([
+    // Primary Key
+    "id",         "INTEGER PRIMARY KEY AUTOINCREMENT",
+    
+    // Fields
+    "name",       "TEXT UNIQUE NOT NULL",
+    "slug",       "TEXT UNIQUE NOT NULL",
+    "description", "TEXT",
+    
+    // Timestamps
+    "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+]))
+
+print("✅ Schema loaded successfully!")
+print("")
+print("📋 Available Models:")
+print("   • User     - User accounts")
+print("   • Post     - Blog posts")
+print("   • Comment  - Post comments")
+print("   • Like     - Post likes")
+print("   • Category - Post categories")
+print("")
+

@@ -1,0 +1,24 @@
+// schema.pv - Define your database models here!
+// This is like migrations in other frameworks, but SIMPLER!
+
+print("Loading database schema...")
+
+// User Model
+let UserFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let User = Model("users", UserFields)
+
+// Post Model
+let PostFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "published", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let Post = Model("posts", PostFields)
+
+// Comment Model
+let CommentFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "content", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let Comment = Model("comments", CommentFields)
+
+// Like Model
+let LikeFields = dict(["id", "INTEGER PRIMARY KEY AUTOINCREMENT", "post_id", "INTEGER NOT NULL", "user_id", "INTEGER NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"])
+let Like = Model("likes", LikeFields)
+
+print("✅ Schema loaded!")
+print("   Models: User, Post, Comment, Like")
+

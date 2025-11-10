@@ -1,0 +1,21 @@
+// Array examples
+
+// Create an array
+let fruits = ["apple", "banana", "orange", "grape"]
+
+print("Fruits:", fruits)
+print("First fruit:", fruits[0])
+print("Second fruit:", fruits[1])
+
+// Array length
+print("Number of fruits:", len(fruits))
+
+// Modify array elements
+fruits[1] = "mango"
+print("Updated fruits:", fruits)
+
+// Nested arrays
+let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print("Matrix:", matrix)
+print("Element at [1][2]:", matrix[1][2])
+

@@ -1,0 +1,35 @@
+// Conditional statements
+
+let age = 20
+
+if (age >= 18) {
+    print("You are an adult")
+} else {
+    print("You are a minor")
+}
+
+// Nested conditionals
+let score = 85
+
+if (score >= 90) {
+    print("Grade: A")
+} else {
+    if (score >= 80) {
+        print("Grade: B")
+    } else {
+        if (score >= 70) {
+            print("Grade: C")
+        } else {
+            print("Grade: F")
+        }
+    }
+}
+
+// Logical operators
+let isWeekend = true
+let isHoliday = false
+
+if (isWeekend or isHoliday) {
+    print("Time to relax!")
+}
+

@@ -1,0 +1,112 @@
+{
+  "Variable Declaration": {
+    "prefix": "let",
+    "body": [
+      "let ${1:name} = ${2:value}"
+    ],
+    "description": "Declare a variable"
+  },
+  "Function Declaration": {
+    "prefix": "fun",
+    "body": [
+      "fun ${1:name}(${2:params}) {",
+      "\t${3:// code}",
+      "\treturn ${4:value}",
+      "}"
+    ],
+    "description": "Declare a function"
+  },
+  "Class Declaration": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\tconstructor(${2:params}) {",
+      "\t\t${3:// initialize}",
+      "\t}",
+      "\t",
+      "\tfun ${4:methodName}() {",
+      "\t\t${5:// code}",
+      "\t}",
+      "}"
+    ],
+    "description": "Declare a class"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// code}",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// code}",
+      "} else {",
+      "\t${3:// code}",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t${2:// code}",
+      "}"
+    ],
+    "description": "While loop"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = ${2:0}; ${1:i} < ${3:length}; ${1:i} = ${1:i} + 1) {",
+      "\t${4:// code}",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "Print Statement": {
+    "prefix": "print",
+    "body": [
+      "print(${1:value})"
+    ],
+    "description": "Print to console"
+  },
+  "Constructor": {
+    "prefix": "constructor",
+    "body": [
+      "constructor(${1:params}) {",
+      "\t${2:// initialize properties}",
+      "}"
+    ],
+    "description": "Class constructor"
+  },
+  "Method": {
+    "prefix": "method",
+    "body": [
+      "fun ${1:methodName}(${2:params}) {",
+      "\t${3:// code}",
+      "}"
+    ],
+    "description": "Class method"
+  },
+  "New Instance": {
+    "prefix": "new",
+    "body": [
+      "let ${1:instance} = new ${2:ClassName}(${3:args})"
+    ],
+    "description": "Create new class instance"
+  },
+  "Array": {
+    "prefix": "array",
+    "body": [
+      "let ${1:array} = [${2:elements}]"
+    ],
+    "description": "Create an array"
+  }
+}
+

@@ -1,0 +1,100 @@
+============================================
+  PRIVVY - The Easiest Backend Language
+============================================
+
+Build a complete backend in 2 minutes!
+
+--------------------------------------------
+QUICK INSTALL (Pick one):
+--------------------------------------------
+
+Option 1: Homebrew (coming soon!)
+  brew tap yourname/privvy
+  brew install privvy
+  privvy create-project my-api
+
+Option 2: One-line install
+  curl -fsSL https://raw.githubusercontent.com/yourname/privvy/main/install.sh | bash
+  privvy create-project my-api
+
+Option 3: Git clone (easiest for now!)
+  git clone https://github.com/yourname/privvy.git
+  cd privvy
+  python3 privvy-cli.py create-project my-api
+
+--------------------------------------------
+CREATE YOUR FIRST PROJECT:
+--------------------------------------------
+
+1. Create project:
+   python3 privvy-cli.py create-project my-api
+   cd my-api
+
+2. Run migrations:
+   python3 privvy.py migrate.pv
+
+3. Run app:
+   python3 privvy.py src/main.pv
+
+Done! You have a working backend! 🎉
+
+--------------------------------------------
+EXAMPLE CODE:
+--------------------------------------------
+
+// Connect to database
+let db = Database("app.db")
+
+// Define model
+let User = Model("users", dict([
+    "id", "SERIAL PRIMARY KEY",
+    "username", "TEXT UNIQUE",
+    "email", "TEXT"
+]))
+
+// Create table
+User.migrate(db)
+
+// Add user
+User.create(db, dict([
+    "username", "alice",
+    "email", "alice@example.com"
+]))
+
+// Get all users
+let users = User.all(db)
+print("Total: " + str(len(users)))
+
+That's it! Full database backend! 🚀
+
+--------------------------------------------
+WHAT YOU GET:
+--------------------------------------------
+
+✅ Built-in database ORM
+✅ PostgreSQL & SQLite support
+✅ One-command project creation
+✅ Zero configuration
+✅ Complete auth examples
+✅ Beginner-friendly syntax
+
+--------------------------------------------
+LEARN MORE:
+--------------------------------------------
+
+After installation, check:
+- QUICK_START.md (detailed tutorial)
+- ORM_GUIDE.md (database operations)
+- examples/ folder (working examples)
+
+--------------------------------------------
+SHARE THIS!
+--------------------------------------------
+
+Send this file or share the GitHub link:
+https://github.com/yourname/privvy
+
+============================================
+Built with ❤️ for beginners
+============================================
+

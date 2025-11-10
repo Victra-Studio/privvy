@@ -1,0 +1,140 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Privvy",
+  "scopeName": "source.privvy",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#classes"
+    },
+    {
+      "include": "#constants"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.privvy",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.privvy",
+          "match": "\\b(if|else|while|for|return)\\b"
+        },
+        {
+          "name": "keyword.other.privvy",
+          "match": "\\b(let|fun|class|constructor|new|extends|this|import|export)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.privvy",
+          "match": "\\b(and|or|not)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.privvy",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.privvy",
+              "match": "\\\\(n|t|r|\\\\|\"|')"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.privvy",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.privvy",
+              "match": "\\\\(n|t|r|\\\\|\"|')"
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.privvy",
+          "match": "\\b([0-9]+\\.?[0-9]*|\\.[0-9]+)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.privvy",
+          "match": "\\b(true|false|null)\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.privvy",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.arithmetic.privvy",
+          "match": "(\\+|\\-|\\*|\\/|%)"
+        },
+        {
+          "name": "keyword.operator.assignment.privvy",
+          "match": "="
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.privvy",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()"
+        },
+        {
+          "name": "support.function.builtin.privvy",
+          "match": "\\b(print|len|str|int|float)\\b"
+        }
+      ]
+    },
+    "classes": {
+      "patterns": [
+        {
+          "name": "entity.name.type.class.privvy",
+          "match": "(?<=class\\s+)([a-zA-Z_][a-zA-Z0-9_]*)"
+        },
+        {
+          "name": "entity.name.type.privvy",
+          "match": "(?<=new\\s+)([a-zA-Z_][a-zA-Z0-9_]*)"
+        }
+      ]
+    }
+  }
+}
+

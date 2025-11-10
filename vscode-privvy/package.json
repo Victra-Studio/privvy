@@ -1,0 +1,37 @@
+{
+  "name": "privvy-lang",
+  "displayName": "Privvy Language Support",
+  "description": "Syntax highlighting and language support for Privvy programming language",
+  "version": "0.1.0",
+  "publisher": "privvy",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "privvy",
+        "aliases": ["Privvy", "privvy"],
+        "extensions": [".pv"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "privvy",
+        "scopeName": "source.privvy",
+        "path": "./syntaxes/privvy.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "privvy",
+        "path": "./snippets/privvy.json"
+      }
+    ]
+  }
+}
+

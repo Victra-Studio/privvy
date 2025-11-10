@@ -1,0 +1,6 @@
+// schema/schema.pv - Database Schema
+// Define your models here (PostgreSQL-compatible)
+
+let User = Model("users", dict(["id", "SERIAL PRIMARY KEY", "username", "TEXT UNIQUE NOT NULL", "email", "TEXT UNIQUE NOT NULL", "password", "TEXT NOT NULL", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
+
+let Post = Model("posts", dict(["id", "SERIAL PRIMARY KEY", "user_id", "INTEGER NOT NULL", "title", "TEXT NOT NULL", "content", "TEXT", "published", "INTEGER DEFAULT 0", "created_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))

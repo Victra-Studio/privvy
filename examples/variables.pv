@@ -1,0 +1,15 @@
+// Variable examples
+let name = "Alice"
+let age = 25
+let isStudent = true
+let score = 95.5
+
+print("Name:", name)
+print("Age:", age)
+print("Is student:", isStudent)
+print("Score:", score)
+
+// Variable reassignment
+age = 26
+print("Updated age:", age)
+

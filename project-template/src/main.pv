@@ -1,0 +1,56 @@
+// Main application file
+// This is a template for creating new Privvy projects
+
+print("Welcome to your Privvy Project!")
+print("================================")
+print("")
+
+// Import your classes and functions here
+// (Note: import/export not yet implemented, use same file for now)
+
+// Example: Simple web-like application structure
+class Router {
+    constructor() {
+        this.routes = []
+    }
+    
+    fun addRoute(path, handler) {
+        print("Registered route: " + path)
+        // In a real web app, this would register the route
+    }
+    
+    fun navigate(path) {
+        print("Navigating to: " + path)
+        // In a real web app, this would call the handler
+    }
+}
+
+class App {
+    constructor(name) {
+        this.name = name
+        this.router = new Router()
+    }
+    
+    fun setup() {
+        print("Setting up " + this.name + "...")
+        
+        // Register routes
+        this.router.addRoute("/", "home")
+        this.router.addRoute("/about", "about")
+        this.router.addRoute("/contact", "contact")
+    }
+    
+    fun run() {
+        print("")
+        print("Starting " + this.name + "...")
+        this.router.navigate("/")
+        print("")
+        print(this.name + " is running!")
+    }
+}
+
+// Create and run the application
+let myApp = new App("MyWebApp")
+myApp.setup()
+myApp.run()
+
