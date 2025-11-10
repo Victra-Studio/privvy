@@ -89,7 +89,7 @@ SHARE THIS!
 --------------------------------------------
 
 Send this file or share the GitHub link:
-https://github.com/yourname/privvy
+https://github.com/Victra-Studio/privvy
 
 ============================================
 Built with ❤️ for beginners
